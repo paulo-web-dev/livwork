@@ -28,6 +28,7 @@ class CreateClientesTable extends Migration
             $table->string('endereco')->nullable();
             $table->string('email')->unique();
             $table->string('senha');
+            $table->foreignId('id_meio_de_faturamento')->nullable()->constrained('meio_de_faturamento')->onDelete('set null');
             $table->timestamps(); // Adiciona created_at e updated_at
         });
     }
