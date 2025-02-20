@@ -6,6 +6,8 @@ use App\Http\Controllers\SalasController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\SalasAdmController;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ListagensController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +28,17 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return redirect()->route('cliente-home');
 })->middleware(['auth', 'verified'])->name('dashboard');
+//Rotas para APIS
 
+//Busca de Horarios
+Route::post('/api/busca/horarios', [ApiController::class, 'BuscaHorarios'])->name('api-buscaHorarios');
+
+
+//Rotas CLIENTES
 Route::middleware('auth', )->group(function () {
     //Rotas pertinentes  ao cliente 
     Route::get('/cliente/home', [HomeController::class, 'home'])->name('cliente-home');
+    Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
     //Rotas referentes as salas
     Route::get('/cliente/busca/salas', [SalasController::class, 'BuscaSala'])->name('cliente-BuscaSala');
     Route::get('/cliente/ver/sala/{id}', [SalasController::class, 'VerSala'])->name('cliente-VerSala');
@@ -43,7 +52,7 @@ Route::middleware('auth', )->group(function () {
 //PAINEL ADMINISTRATIVO
 Route::middleware('admin')->group(function () {
 
-    Route::get('/adm/home', [HomeController::class, 'home'])->name('cliente-home');
+    Route::get('/adm/home', [ListagensController::class, 'reservas'])->name('adm-home');
 
     //Rotas referentes a clientes 
     
@@ -58,15 +67,19 @@ Route::middleware('admin')->group(function () {
     Route::get('/adm/form/unidades', [UnidadesController::class, 'form'])->name('adm-form-unidades');
     Route::post('/adm/cad/unidades', [UnidadesController::class, 'cad'])->name('adm-cad-unidades');
     Route::get('/adm/info/unidades/{id}', [UnidadesController::class, 'info'])->name('adm-info-unidades');
-    Route::get('/adm/edit/unidades/{id}', [UnidadesController::class, 'edit'])->name('adm-edit-unidades');
     Route::post('/adm/upd/unidades', [UnidadesController::class, 'upd'])->name('adm-upd-unidades');
 
     //Rotas Referentes ao Cadastro e Edição de Sala
     Route::get('/adm/form/salas', [SalasAdmController::class, 'form'])->name('adm-form-salas');
     Route::post('/adm/cad/salas', [SalasAdmController::class, 'cad'])->name('adm-cad-salas');
     Route::get('/adm/info/salas/{id}', [SalasAdmController::class, 'info'])->name('adm-info-salas');
-    Route::get('/adm/edit/salas/{id}', [SalasAdmController::class, 'edit'])->name('adm-edit-salas');
     Route::post('/adm/upd/salas', [SalasAdmController::class, 'upd'])->name('adm-upd-salas');
+
+    //Rotas referentes as listagens
+    Route::get('/adm/listar/clientes', [ListagensController::class, 'clientes'])->name('adm-listar-clientes');
+    Route::get('/adm/listar/unidades', [ListagensController::class, 'unidades'])->name('adm-listar-unidades');
+    Route::get('/adm/listar/salas', [ListagensController::class, 'salas'])->name('adm-listar-salas');
+    Route::get('/adm/listar/reservas', [ListagensController::class, 'reservas'])->name('adm-listar-reservas');
 
 });
 

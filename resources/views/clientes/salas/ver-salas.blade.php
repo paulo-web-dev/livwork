@@ -33,7 +33,7 @@
                                     @if($loop->index == 0)
                                         <div class="carousel-item text-center  active">
                                         @else
-                                            <div class="carousel-item text-center  active">
+                                            <div class="carousel-item text-center">
                                     @endif
                                     <img src="{{ url('fotos/salas/'.$foto->path) }}" alt=""
                                         class="img-fluid bg-body shadow-none rounded">
@@ -101,34 +101,69 @@
                         <label for="data" class="mb-1 text-dark fw-semibold fs-15">Selecione a data:</label>
                         <input type="date" id="data" name="data" class="form-control" required>
                     </div>
-
-                    <div class="mt-3 mb-2">
-                        <label for="hora_inicio" class="mb-1 text-dark fw-semibold fs-15">Horário de início:</label>
-                        <select id="hora_inicio" name="hora_inicio" class="form-control" required>
-                            <?php
-                            for ($hour = 0; $hour < 24; $hour++) {
-                                for ($minute = 0; $minute < 60; $minute += 30) {
-                                    $time = sprintf('%02d:%02d', $hour, $minute); // Formata o horário
-                                    echo "<option value=\"$time\">$time</option>";
-                                }
-                            }
-                            ?>
-                        </select>
+                    
+                    <div id="horarios-container" style="display: none;">
+                        <div class="mt-3 mb-2">
+                            <label for="hora_inicio" class="mb-1 text-dark fw-semibold fs-15">Horário de início:</label>
+                            <select id="hora_inicio" name="hora_inicio" class="form-control" required></select>
+                        </div>
+                    
+                        <div class="mt-3 mb-2">
+                            <label for="hora_fim" class="mb-1 text-dark fw-semibold fs-15">Horário de término:</label>
+                            <select id="hora_fim" name="hora_fim" class="form-control" required></select>
+                        </div>
                     </div>
                     
-                    <div class="mt-3 mb-2">
-                        <label for="hora_fim" class="mb-1 text-dark fw-semibold fs-15">Horário de término:</label>
-                        <select id="hora_fim" name="hora_fim" class="form-control" required>
-                            <?php
-                            for ($hour = 0; $hour < 24; $hour++) {
-                                for ($minute = 0; $minute < 60; $minute += 30) {
-                                    $time = sprintf('%02d:%02d', $hour, $minute); // Formata o horário
-                                    echo "<option value=\"$time\">$time</option>";
-                                }
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                    $(document).ready(function() {
+                        $("#data").on("change", function() {
+                            var dataSelecionada = $(this).val();
+                            var idSala = "<?= $sala->id ?>"; // Obtém o ID da sala do PHP
+                    
+                            if (dataSelecionada) {
+                                $.ajax({
+                                    url: "{{ route('api-buscaHorarios') }}",
+                                    type: "POST",
+                                    data: {
+                                        data: dataSelecionada,
+                                        id_sala: idSala,
+                                        _token: "{{ csrf_token() }}" // Adiciona o token CSRF para segurança
+                                    },
+                                    success: function(response) {
+                                        console.log(response); // Exibe o retorno no console
+                    
+                                        if (response.horarios_inicio.length > 0) {
+                                            $("#hora_inicio").empty();
+                                            $("#hora_fim").empty();
+                    
+                                            // Preenche os selects com os horários disponíveis
+                                            $.each(response.horarios_inicio, function(index, hora) {
+                                                $("#hora_inicio").append(`<option value="${hora}">${hora}</option>`);
+                                            });
+                    
+                                            $.each(response.horarios_fim, function(index, hora) {
+                                                $("#hora_fim").append(`<option value="${hora}">${hora}</option>`);
+                                            });
+                    
+                                            // Exibe os selects de horário
+                                            $("#horarios-container").fadeIn();
+                                        } else {
+                                            alert("Nenhum horário disponível para esta data.");
+                                            $("#horarios-container").hide();
+                                        }
+                                    },
+                                    error: function(xhr) {
+                                        console.error(xhr.responseText);
+                                        alert("Erro ao buscar os horários. Tente novamente.");
+                                    }
+                                });
+                            } else {
+                                $("#horarios-container").hide();
                             }
-                            ?>
-                        </select>
-                    </div>
+                        });
+                    });
+                    </script>
                     
 
                     <button type="submit" class="btn btn-primary mt-3">Reservar Sala</button>

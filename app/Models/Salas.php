@@ -22,7 +22,7 @@ class Salas extends Model
 
     {
 
-        return $this->hasMany(FotosSala::class, 'id', 'id_unidade');
+        return $this->hasMany(FotosSala::class, 'id_sala', 'id');
 
     }
 
@@ -33,6 +33,33 @@ class Salas extends Model
     {
 
         return $this->hasMany(Facilidades::class, 'id_sala', 'id');
+
+    }
+
+       
+    public function prereservas()
+
+    {
+
+        return $this->hasMany(PreReserva::class, 'id_sala', 'id');
+
+    }
+
+       
+    public function configuracao()
+
+    {
+
+        return $this->hasOne(ConfiguracoesSalas::class, 'id_sala', 'id');
+
+    }
+
+       
+    public function horarios()
+
+    {
+
+        return $this->hasOne(HorariosFUncionamento::class, 'id_sala', 'id');
 
     }
 }

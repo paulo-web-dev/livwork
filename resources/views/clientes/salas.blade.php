@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <div class="d-flex flex-wrap gap-2 align-items-center">
                                     <div class="avatar-xl bg-light d-flex align-items-center justify-content-center rounded-circle flex-shrink-0">
-                                        <img src="https://storage.googleapis.com/cliente-livwork-unidade-3/sistema/produto/2136/7f74475617ce103f0d83c9223fd692e4-663d660b0fbed.jpeg?GoogleAccessId=904567454930-compute%40developer.gserviceaccount.com&Expires=1736305200&Signature=iT3wA1VjinKsFpeffMuCIY2xTOoo0qwqJQt8GyyMsDPHohY8Si5JgiYmXnk1lq2oED3%2FRxjQ3PVTIPx2x6kwgjKkIzegeuCs%2FpaIpNDNwgodulePFXkOI2xNGch1Yk5Cw0y25TsfRYhHCeg4Lo%2B%2BnoGobgpUi2Q30TltKJW9zZ3whEdKLVqc9T9k0beImdcZXdTrX8NBYzH0R9AphPXzoTigyUPyh9c9VJm20VSmJRgC%2F0BbET4tl9b1uLR5dmLZtY2qULxk8e5YA%2Bsyo0KBrAnOgUEiCr1GjFkf6UkYiJ5s1WKdd7w3mdi0WL4pbvVzGQxTKFhI9eIio1yiXFyXqA%3D%3D" alt="" class="avatar-lg flex-shrink-0">
+                                        <img src="{{ url('fotos/salas/'.$sala->fotos[0]->path) }}" alt="" class="avatar-lg flex-shrink-0">
                                     </div>
                                     <div>
                                         <h4 class="text-dark fw-semibold">{{$unidade->nome}} - {{$sala->nome}}</h4>

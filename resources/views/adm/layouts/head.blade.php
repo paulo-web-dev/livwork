@@ -24,6 +24,8 @@
 
     <!-- Icons css -->
     <link href="{{url('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -64,7 +66,7 @@
                    
 
                     <li class="side-nav-item">
-                        <a href="index.html" class="side-nav-link">
+                        <a href="{{route('adm-home')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="ti ti-dashboard"></i></span>
                             <span class="menu-text"> Início </span>
                             <span class="badge bg-success rounded-pill">5</span>
@@ -72,21 +74,28 @@
                     </li>
                     
                     <li class="side-nav-item">
+                        <a href="{{route('adm-listar-reservas')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="ti ti-calendar"></i></span>
+                            <span class="menu-text"> Reservas </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarHospital" aria-expanded="false" aria-controls="sidebarHospital" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-medical-cross"></i></span>
-                            <span class="menu-text"> Reservas</span>
+                            <span class="menu-icon"><i class="ti ti-building-hospital"></i></span>
+                            <span class="menu-text"> Unidades</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarHospital">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="apps-hospital-doctors.html" class="side-nav-link">
-                                        <span class="menu-text">Reservar Salas</span>
+                                    <a href="{{route('adm-form-unidades')}}" class="side-nav-link">
+                                        <span class="menu-text">Cadastrar Unidade</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="apps-hospital-doctor-details.html" class="side-nav-link">
-                                        <span class="menu-text">Minhas Reservas</span>
+                                    <a href="{{route('adm-listar-unidades')}}" class="side-nav-link">
+                                        <span class="menu-text">Ver Unidades</span>
                                     </a>
                                 </li>
                              
@@ -96,67 +105,53 @@
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-basket"></i></span>
-                            <span class="menu-text"> Consumo </span>
+                            <span class="menu-icon"><i class="ti ti-inbox"></i></span>
+                            <span class="menu-text"> Salas </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarEcommerce">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="apps-ecommerce-products.html" class="side-nav-link">
-                                        <span class="menu-text">Novo Pedido</span>
+                                    <a href="{{route('adm-form-salas')}}" class="side-nav-link">
+                                        <span class="menu-text">Cadastrar Sala</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="apps-ecommerce-products-grid.html" class="side-nav-link">
-                                        <span class="menu-text">Relatório de Consumo</span>
+                                    <a href="{{route('adm-listar-salas')}}" class="side-nav-link">
+                                        <span class="menu-text">Ver Salas</span>
                                     </a>
                                 </li>
-                               
+                             
+                            </ul>
+                        </div>
+                    </li>
+
+                    
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
+                            <span class="menu-icon"><i class="ti ti-basket"></i></span>
+                            <span class="menu-text"> Clientes </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarEcommerce">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('adm-form-clientes')}}" class="side-nav-link">
+                                        <span class="menu-text">Cadastrar Cliente</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('adm-listar-clientes')}}" class="side-nav-link">
+                                        <span class="menu-text">Ver Clientes</span>
+                                    </a>
+                                </li>
+                             
                             </ul>
                         </div>
                     </li>
 
 
-                    <li class="side-nav-item">
-                        <a href="dashboard-clinic.html" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-building-hospital"></i></span>
-                            <span class="menu-text"> Meus Recados </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="dashboard-wallet.html" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-wallet"></i></span>
-                            <span class="menu-text"> Minhas Correspondências </span>
-                            <span class="badge p-0 menu-alert fs-16 text-danger">
-                                <i class="ti ti-info-triangle" data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-warning" data-bs-title="Your wallet balance is <b>low!</b>"></i>
-                            </span>
-                        </a>
-                    </li>
-
-                 
-
-                    <li class="side-nav-item">
-                        <a href="apps-chat.html" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-message"></i></span>
-                            <span class="menu-text"> Minhas Faturas </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="apps-calendar.html" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-calendar"></i></span>
-                            <span class="menu-text"> Gerenciar Pessoas </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="apps-email.html" class="side-nav-link">
-                            <span class="menu-icon"><i class="ti ti-inbox"></i></span>
-                            <span class="menu-text"> Ajuda </span>
-                        </a>
-                    </li>
+            
 
                    
 
@@ -242,7 +237,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item active fw-semibold text-danger">
+                            <a href="{{route('logout')}}" class="dropdown-item active fw-semibold text-danger">
                                 <i class="ti ti-logout me-1 fs-17 align-middle"></i>
                                 <span class="align-middle">Log Out</span>
                             </a>

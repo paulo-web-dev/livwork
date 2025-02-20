@@ -22,8 +22,15 @@ class SalasController extends Controller
 
 
     public function VerSala($id){
-       $sala = Salas::where('id', $id)->with('facilidades')->with('fotos')->with('unidades')->first();
-      
+        $sala = Salas::where('id', $id)
+        ->with('unidades')
+        ->with('fotos')
+        ->with('facilidades')
+        ->with('configuracao')
+        ->with('horarios')
+        ->with('prereservas')
+        ->first();
+    
         return view('clientes.salas.ver-salas', [
             'sala' => $sala,
         ]);

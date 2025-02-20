@@ -11,7 +11,7 @@
                 
                 <div class="page-title-head d-flex align-items-sm-center flex-sm-row flex-column gap-2">
                     <div class="flex-grow-1">
-                        <h4 class="fs-18 fw-semibold mb-0">Cadastrar Salas  </h4>
+                        <h4 class="fs-18 fw-semibold mb-0">Informação da Sala {{$sala->nome}}  </h4>
                     </div>
 
                  
@@ -19,7 +19,7 @@
                 
 
                 
-
+                
                 <div class="row">
                     <div class="col-xlg-7">
                         <div class="card">
@@ -27,15 +27,16 @@
                                 <h4 class="card-title mb-0">Informações Básicas</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('adm-cad-salas') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('adm-upd-salas') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    <input type="hidden" name="id_sala" value = {{$sala->id}} />
                                     <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="unidade" class="form-label">Unidade</label>
                                             <select class="form-control" id="id_unidade" name="id_unidade">
                                                 @foreach ($unidades as $unidade)
-                                                <option value="{{$unidade->id}}">{{$unidade->id}} - {{$unidade->nome}}</option>
+                                                <option @if ($sala->unidades->id == $unidade->id) selected @endif  value="{{$unidade->id}}">{{$unidade->id}} - {{$unidade->nome}}</option>
                                                 @endforeach
                                                 
                                             </select>
@@ -46,28 +47,28 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="nome" class="form-label">Nome</label>
-                                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome da unidade" required>
+                                                <input type="text" class="form-control" id="nome" name="nome" value="{{$sala->nome}}" placeholder="Digite o nome da unidade" required>
                                             </div>
                                         </div>
                                 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="valor" class="form-label">Valor (R$)</label>
-                                                <input type="text" class="form-control" id="valor" name="valor" placeholder="Digite o valor">
+                                                <input type="text" class="form-control" id="valor" name="valor" value="{{$sala->valor}}" placeholder="Digite o valor">
                                             </div>
                                         </div>
                                 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="cor" class="form-label">Cor</label>
-                                                <input type="color" class="form-control" id="cor" name="cor">
+                                                <input type="color" class="form-control" id="cor"  value="{{$sala->configuracao->cor}}" name="cor">
                                             </div>
                                         </div>
                                 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="quantidade_max_pessoas" class="form-label">Quantidade Máxima de Pessoas</label>
-                                                <input type="number" class="form-control" id="quantidade_max_pessoas" name="quantidade_max_pessoas" min="1">
+                                                <input type="number" class="form-control" id="quantidade_max_pessoas" name="quantidade_max_pessoas" value="{{$sala->configuracao->quantidade_max_pessoas}}" min="1">
                                             </div>
                                         </div>
                                        
@@ -76,13 +77,14 @@
                                                 <div class="mb-3">
                                                     <label for="{{ $campo }}" class="form-label">{{ ucwords(str_replace('_', ' ', $campo)) }}</label>
                                                     <select class="form-control" id="{{ $campo }}" name="{{ $campo }}">
-                                                        <option value="Habilitado">Habilitado</option>
-                                                        <option value="Desabilitado">Desabilitado</option>
+                                                       
+                                                        <option @if ($sala->configuracao->$campo == 'Habilitado') selected @endif value="Habilitado"> Habilitado</option>
+                                                        <option @if ($sala->configuracao->$campo == 'Desabilitado') selected @endif value="Desabilitado">Desabilitado</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         @endforeach
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-header border-bottom border-dashed">
                                                     <h4 class="card-title mb-0">Upload de fotos da sala</h4>
@@ -131,7 +133,7 @@
                                                 </div>
                                             </div>
                                
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-12">
                                             <label class="form-label" style="font-size: 20px">Horários de Funcionamento</label>
                                           <br>
@@ -139,6 +141,7 @@
                                                 <div class="col-md-6">
                                                     <label class="form-label">Horário de Início Padrão</label>
                                                     <select class="form-control" name="horario_inicio_padrao">
+                                                        <option value="{{$sala->horarios->inicio_padrao}}">{{$sala->horarios->inicio_padrao}}</option>
                                                         @for ($h = 0; $h <= 23; $h++)
                                                             @foreach(['00', '30'] as $m)
                                                                 <option value="{{ sprintf('%02d:%s', $h, $m) }}">{{ sprintf('%02d:%s', $h, $m) }}</option>
@@ -150,6 +153,7 @@
                                                 <div class="col-md-6" >
                                                     <label class="form-label">Horário de Fim Padrão</label>
                                                     <select class="form-control" name="horario_fim_padrao">
+                                                        <option value="{{$sala->horarios->fim_padrao}}">{{$sala->horarios->fim_padrao}}</option>
                                                         @for ($h = 0; $h <= 23;$h++)
                                                             @foreach(['00', '30'] as $m)
                                                                 <option value="{{ sprintf('%02d:%s', $h, $m) }}">{{ sprintf('%02d:%s', $h, $m) }}</option>
@@ -171,6 +175,11 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label">Horário de Início</label>
                                                         <select class="form-control" name="horario_inicio_{{ $key }}">
+                                                            @php 
+                                                            $inicio = 'inicio_'.$key;
+                                                            $fim = 'fim_'.$key;
+                                                            @endphp
+                                                            <option value="{{$sala->horarios->$inicio}}">{{$sala->horarios->$inicio}}</option>
                                                             @for ($h = 0; $h <= 23; $h++)
                                                                 @foreach(['00', '30'] as $m)
                                                                     <option value="{{ sprintf('%02d:%s', $h, $m) }}">{{ sprintf('%02d:%s', $h, $m) }}</option>
@@ -181,6 +190,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label">Horário de Fim</label>
                                                         <select class="form-control" name="horario_fim_{{ $key }}">
+                                                            <option value="{{$sala->horarios->$fim}}">{{$sala->horarios->$fim}}</option>
                                                             @for ($h = 0; $h <= 23;$h++)
                                                                 @foreach(['00', '30'] as $m)
                                                                     <option value="{{ sprintf('%02d:%s', $h, $m) }}">{{ sprintf('%02d:%s', $h, $m) }}</option>
@@ -203,17 +213,30 @@
                                         <div class="col-lg-12">
                                             <label class="form-label" style="font-size: 20px">Comodidades da Sala</label>
                                             <div class="d-flex flex-wrap">
-                                                @foreach(['Projetor', 'Wi-Fi', 'Quadro Branco', 'Acessibilidade', 'Ar-condicionado', 'Flipchart', 'Televisão', 'Higienização', 'Frigobar', 'Cabo HDMI'] as $comodidade)
-                                                    <div class="form-check me-3">
-                                                        <input class="form-check-input" type="checkbox" id="comodidade_{{ $loop->index }}" name="comodidades[]" value="{{ $comodidade }}">
-                                                        <label class="form-check-label" for="comodidade_{{ $loop->index }}">{{ $comodidade }}</label>
-                                                    </div>
-                                                @endforeach
+                                                @php
+                                                // Obtém uma lista das facilidades cadastradas no banco para a sala atual
+                                                $facilidadesMarcadas = $sala->facilidades->pluck('facilidade')->toArray();
+                                            @endphp
+                                            
+                                            @foreach(['Projetor', 'Wi-Fi', 'Quadro Branco', 'Acessibilidade', 'Ar-condicionado', 'Flipchart', 'Televisão', 'Higienização', 'Frigobar', 'Cabo HDMI'] as $comodidade)
+                                                <div class="form-check me-3">
+                                                    <input 
+                                                        class="form-check-input" 
+                                                        type="checkbox" 
+                                                        id="comodidade_{{ $loop->index }}" 
+                                                        name="comodidades[]" 
+                                                        value="{{ $comodidade }}" 
+                                                        @if(in_array($comodidade, $facilidadesMarcadas)) checked @endif
+                                                    >
+                                                    <label class="form-check-label" for="comodidade_{{ $loop->index }}">{{ $comodidade }}</label>
+                                                </div>
+                                            @endforeach
+                                            
                                             </div>
                                         </div>
                                 
                                         <div class="col-lg-12">
-                                            <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
+                                            <button type="submit" class="btn btn-primary mt-3">Atualizar</button>
                                         </div>
 
                                         

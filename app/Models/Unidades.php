@@ -15,7 +15,7 @@ class Unidades extends Model
 
     {
 
-        return $this->hasMany(Salas::class, 'id_unidade', 'id')->with('facilidades');
+        return $this->hasMany(Salas::class, 'id_unidade', 'id')->with('facilidades')->with('fotos');
 
     }
 }

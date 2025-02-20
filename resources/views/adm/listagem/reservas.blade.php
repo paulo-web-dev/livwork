@@ -1,4 +1,4 @@
-@include('clientes.layouts.head')
+@include('adm.layouts.head')
 
 <div class="page-content">
 
@@ -8,7 +8,7 @@
         
         <div class="page-title-head d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="fs-18 fw-semibold mb-0">Minhas Reservas</h4>
+                <h4 class="fs-18 fw-semibold mb-0">Reservas</h4>
             </div>
 
       

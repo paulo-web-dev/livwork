@@ -1,4 +1,4 @@
-@include('clientes.layouts.head')
+@include('adm.layouts.head')
 
 <div class="page-content">
 
@@ -8,7 +8,7 @@
         
         <div class="page-title-head d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="fs-18 fw-semibold mb-0">Minhas Reservas</h4>
+                <h4 class="fs-18 fw-semibold mb-0">Salas Cadastrados</h4>
             </div>
 
       
@@ -38,51 +38,45 @@
                                 <tr>
                                    
                                     <th>ID</th>
-                                    <th>Sala/Estação de Trabalho</th>
-                                    <th>Data</th>
-                                    <th>Início</th>
+                                    <th>Nome</th>
+                                    <th>Valor</th>
+                                    <th>Inicio</th>
                                     <th>Fim</th>
-                                    <th>Utilizações</th>
-                                    <th>Convidados</th>
-                                    <th>Obs</th>
+                                    <th>Pessoas</th>
+                                  
                                     <th class="text-center" style="width: 120px;">Ações</th>
                                 </tr>
                             </thead><!-- end thead -->
                             <tbody>
-                            @foreach ($reservas as $reserva )
+                            @foreach ($salas as $sala )
 
-                                <tr>
+                                <tr> 
                                     
                                     <td>
-                                        <a href="apps-ecommerce-order-details.html" class="text-muted fw-medium">#{{$reserva->id}}</a>
+                                        <a href="apps-ecommerce-order-details.html" class="text-muted fw-medium">#{{$sala->id}}</a>
                                     </td>
                                     <td>
-                                        <h5 class="mb-0 text-dark">{{$reserva->preReserva->sala->nome}}</h5>
+                                        <h5 class="mb-0 text-dark">{{$sala->nome}}</h5>
                                     </td>
                                     <td>
-                                        <p class="mb-1"><span class="text-dark fw-semibold">{{$reserva->preReserva->data}}</p>
+                                        <p class="mb-1"><span class="text-dark fw-semibold">R${{$sala->valor}}</p>
                                     </td>
                                     <td>
-                                        <p class="mb-1">{{$reserva->preReserva->hora_inicio}}</p>
+                                        <p class="mb-1">{{$sala->horarios->inicio_padrao}}</p>
                                       
                                     </td>
 
                                     <td>
-                                        {{$reserva->preReserva->hora_fim}}
+                                        {{$sala->horarios->fim_padrao}}
                                     </td>
                                     <td>
-                                      
+                                        {{$sala->configuracao->quantidade_max_pessoas}}
                                     </td>
-                                    <td>
-                                      
-                                    </td>
-                                    <td>
-                                      
-                                    </td>   
+                                     
                                     
                                     <td class="pe-3">
                                         <div class="hstack gap-1 justify-content-end">
-                                            <a href="javascript:void(0);" class="btn btn-soft-primary btn-icon btn-sm rounded-circle"> <i class="ti ti-eye"></i></a>
+                                            <a href="{{route('adm-info-salas', ['id' => $sala->id])}}" class="btn btn-soft-primary btn-icon btn-sm rounded-circle"> <i class="ti ti-eye"></i></a>
                                             <a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle"> <i class="ti ti-trash"></i></a>
                                         </div>
                                     </td>
