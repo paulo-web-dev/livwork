@@ -5,10 +5,10 @@
 <!-- Mirrored from coderthemes.com/osen/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Nov 2024 22:09:29 GMT -->
 <head>
     <meta charset="utf-8" />
-    <title>Log In | Osen - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Log In | LivWork Coworkings </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="Gestão de Coworkings Desenvolvido por Plataforma Um" name="description" />
+    <meta content="Plataforma Um" name="author" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
