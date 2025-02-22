@@ -11,7 +11,7 @@ class CreateSalasTable extends Migration
      */
     public function up()
     {
-        Schema::create('salasLocacao', function (Blueprint $table) {
+        Schema::create('salas', function (Blueprint $table) {
             $table->id(); // Campo id (chave primária)
             $table->string('nome'); // Campo obrigatório
             $table->decimal('valor', 10, 2); // Campo obrigatório (valor decimal)
