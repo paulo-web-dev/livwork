@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salas;
 use App\Models\PreReserva;
+use App\Models\Unidades;
 use DateTime;
 
 class ApiController extends Controller
@@ -73,5 +74,14 @@ class ApiController extends Controller
         ]);
     }
     
+
+    public function BuscaSalas ($unidade){
+
+        $salas = Salas::where('id_unidade', $unidade)->get();
+
+        return response()->json([
+            'salas' => $salas,
+        ]);
+    }
     
 }

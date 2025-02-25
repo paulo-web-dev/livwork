@@ -16,7 +16,16 @@ class PreReserva extends Model
 
     {
 
-        return $this->hasOne(Salas::class, 'id', 'id_sala')->with('unidades');
+        return $this->hasOne(Salas::class, 'id', 'id_sala')->with('unidades')
+        ->with('fotos')
+        ->with('facilidades')
+        ->with('configuracao')
+        ->with('horarios')
+        ->with('prereservas');
 
+    }
+
+    public function reserva(){
+        return $this->hasOne(Reservas::class, 'id_pre_reserva', 'id');
     }
 }

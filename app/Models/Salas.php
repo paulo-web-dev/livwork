@@ -59,7 +59,7 @@ class Salas extends Model
 
     {
 
-        return $this->hasOne(HorariosFUncionamento::class, 'id_sala', 'id');
+        return $this->hasOne(HorariosFuncionamento::class, 'id_sala', 'id');
 
     }
 }

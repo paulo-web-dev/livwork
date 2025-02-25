@@ -8,6 +8,7 @@ use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\SalasAdmController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ListagensController;
+use App\Http\Controllers\ReservasAdmController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::get('/dashboard', function () {
 //Busca de Horarios
 Route::post('/api/busca/horarios', [ApiController::class, 'BuscaHorarios'])->name('api-buscaHorarios');
 
+//Busca de Salas 
+Route::get('/api/busca/salas/{unidade}', [ApiController::class, 'BuscaSalas'])->name('api-buscaSalas');
+
 
 //Rotas CLIENTES
 Route::middleware('auth', )->group(function () {
@@ -48,6 +52,8 @@ Route::middleware('auth', )->group(function () {
     Route::post('/cliente/reservar/sala', [SalasController::class, 'ReservarSala'])->name('cliente-ReservarSala');
     Route::get('/cliente/ver/reserva/{id}', [SalasController::class, 'VerReserva'])->name('cliente-VerReserva');
     Route::get('/cliente/minhas/reservas', [SalasController::class, 'MinhasReservas'])->name('cliente-MinhasReservas');
+    Route::get('/cliente/editar/reserva/{id}', [SalasController::class, 'EditarReserva'])->name('cliente-EditarReserva');
+    Route::post('/cliente/editar/pre/reserva/sala', [SalasController::class, 'EditarPreReservaSala'])->name('cliente-EditarPreReservaSala');
 });
 //PAINEL ADMINISTRATIVO
 Route::middleware('admin')->group(function () {
@@ -81,6 +87,8 @@ Route::middleware('admin')->group(function () {
     Route::get('/adm/listar/salas', [ListagensController::class, 'salas'])->name('adm-listar-salas');
     Route::get('/adm/listar/reservas', [ListagensController::class, 'reservas'])->name('adm-listar-reservas');
 
+    //Rotas referentes a Reserva por meio do ADM
+    Route::get('/adm/reservar/clientes/{cliente}', [ReservasAdmController::class, 'ReservarCliente'])->name('adm-reservar-clientes');
 });
 
 require __DIR__.'/auth.php';

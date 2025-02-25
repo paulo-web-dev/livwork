@@ -35,6 +35,8 @@ class SalasController extends Controller
             'sala' => $sala,
         ]);
     }
+
+
     //Pré Reservas
     public function PreReservarSala(Request $request){
         
@@ -128,5 +130,44 @@ class SalasController extends Controller
             'reservas' => $reservas,
         ]);
     }
+
+
+    public function EditarReserva($id){
+
+        $reservas = Reservas::where('id', $id)->with('preReserva')->first();
+        $sala = $reservas->preReserva->sala;
+        $preReserva = $reservas->preReserva;
+        return view('clientes.reservas.editar-reservas', [
+            'sala' => $sala,
+            'preReserva' => $preReserva,
+
+        ]);
+    }
+
+    public function EditarPreReservaSala(Request $request){
+        
+        $sala = Salas::where('id', $request->id_sala)->first();
+        $inicio = new DateTime($request->hora_inicio);
+        $fim = new DateTime($request->hora_fim);
+        $intervalo = $inicio->diff($fim);
+      
+        if($intervalo->i == 0){
+        $multiplicador_valor = $intervalo->h;
+        }else{
+            $multiplicador_valor = $intervalo->h + 0.5;
+        }
+        $valor = $sala->valor * $multiplicador_valor;
+        
+        $preReserva =  PreReserva::where('id', $request->id_pre_reserva)->with('reserva')->first();
+        $preReserva->id_user = Auth::user()->id;
+        $preReserva->id_sala = $sala->id;
+        $preReserva->data = $request->data;
+        $preReserva->hora_inicio = $request->hora_inicio;
+        $preReserva->hora_fim = $request->hora_fim;
+        $preReserva->status = 'Aguardando Pagamento';
+        $preReserva->valor = $valor;
+        $preReserva->save();
+         return redirect()->route('cliente-VerReserva', ['id' =>$preReserva->reserva->id]);
+     }
 
 }
