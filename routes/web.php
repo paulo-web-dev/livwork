@@ -89,6 +89,9 @@ Route::middleware('admin')->group(function () {
 
     //Rotas referentes a Reserva por meio do ADM
     Route::get('/adm/reservar/clientes/{cliente}', [ReservasAdmController::class, 'ReservarCliente'])->name('adm-reservar-clientes');
+    Route::post('/adm/reservar/sala', [ReservasAdmController::class, 'ReservarSala'])->name('adm-reservar-sala');
+    Route::get('/adm/reservas/info/{id}', [ReservasAdmController::class, 'ReservaInfo'])->name('adm-reservar-info');
+    Route::post('/adm/reservas/atualizar', [ReservasAdmController::class, 'AtualizarReservarSala'])->name('adm-reservar-atualizar');
 });
 
 require __DIR__.'/auth.php';
